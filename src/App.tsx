@@ -1,10 +1,19 @@
-import React from 'react';
+import { Box } from "@mui/material";
+import React from "react";
 //import './App.css';
-import { Navbar } from './components/Navbar';
+import { Navbar } from "./components/Navbar";
+import { Page } from "./components/Page";
 
-function App() {
+const App: React.FC = () => {
   return (
-    <Navbar/>
+    <>
+      <Navbar />
+      <Box paddingTop='80px'>
+        <Page title={'Categorias'}>
+          Conteudo
+        </Page>
+      </Box>
+    </>
   );
 }
 
