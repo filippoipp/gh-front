@@ -1,4 +1,4 @@
-import { Container, Typography } from "@mui/material";
+import { Box, Container, Typography } from "@mui/material";
 import * as React from "react";
 
 type PageProps = {
@@ -11,7 +11,9 @@ export const Page: React.FC<PageProps> = (props) => {
       <Typography style={{ color: "#999999" }} component="h1" variant="h5">
         {props.title}
       </Typography>
-      {props.children}
+      <Box paddingBottom={2}>
+        {props.children}
+      </Box>
     </Container>
   );
 };
