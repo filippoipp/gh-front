@@ -11,6 +11,8 @@ import {
   Paper,
 } from "@mui/material";
 import { styled } from "@mui/material/styles";
+import { httpRequests } from "../../util/http";
+import { useState, useEffect } from "react";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -44,10 +46,19 @@ const rows = [
   createData("Frozen yoghurt", "Frozen yoghurt", String(new Date())),
 ];
 
+interface Category {
+  id: string;
+  name: string;
+  createdAt: Date;
+}
+
 const Table = () => {
+  const [data, setData] = useState([]);
 
   useEffect(() => {
-    
+    httpRequests.get('/private/v1/category').then(
+      response => setData(response.data)
+    );
   }, [])
   return (
     <TableContainer component={Paper}>
@@ -55,19 +66,19 @@ const Table = () => {
         <TableHead>
           <TableRow>
             <StyledTableCell>ID</StyledTableCell>
-            <StyledTableCell align="right">Nome</StyledTableCell>
-            <StyledTableCell align="right">Data de criação</StyledTableCell>
+            <StyledTableCell>Nome</StyledTableCell>
+            <StyledTableCell>Data de criação</StyledTableCell>
             <StyledTableCell align="right">Ações</StyledTableCell>
           </TableRow>
         </TableHead>
         <TableBody>
-          {rows.map((row) => (
+          {data.map((row: Category) => (
             <StyledTableRow key={row.id}>
               <StyledTableCell component="th" scope="row">
                 {row.id}
               </StyledTableCell>
-              <StyledTableCell align="right">{row.name}</StyledTableCell>
-              <StyledTableCell align="right">{row.createdAt}</StyledTableCell>
+              <StyledTableCell>{row.name}</StyledTableCell>
+              <StyledTableCell>{String(row.createdAt)}</StyledTableCell>
               <StyledTableCell align="right"></StyledTableCell>
             </StyledTableRow>
           ))}
