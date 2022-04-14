@@ -14,6 +14,9 @@ import { styled } from "@mui/material/styles";
 import { httpRequests } from "../../util/http";
 import { useState, useEffect } from "react";
 
+import format from 'date-fns/format'
+import parseISO from 'date-fns/parseISO'
+
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
     backgroundColor: "#e41134",
@@ -33,18 +36,6 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
     border: 0,
   },
 }));
-
-function createData(id: string, name: string, createdAt: string) {
-  return { id, name, createdAt };
-}
-
-const rows = [
-  createData("Frozen yoghurt", "Frozen yoghurt", String(new Date())),
-  createData("Ice cream sandwich", "Frozen yoghurt", String(new Date())),
-  createData("Frozen yoghurt", "Frozen yoghurt", String(new Date())),
-  createData("Frozen yoghurt", "Frozen yoghurt", String(new Date())),
-  createData("Frozen yoghurt", "Frozen yoghurt", String(new Date())),
-];
 
 interface Category {
   id: string;
@@ -78,7 +69,9 @@ const Table = () => {
                 {row.id}
               </StyledTableCell>
               <StyledTableCell>{row.name}</StyledTableCell>
-              <StyledTableCell>{String(row.createdAt)}</StyledTableCell>
+              <StyledTableCell>
+                <span>{format(parseISO(String(row.createdAt)), 'dd/MM/yyyy')}</span>
+              </StyledTableCell>
               <StyledTableCell align="right"></StyledTableCell>
             </StyledTableRow>
           ))}
