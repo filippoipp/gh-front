@@ -1,18 +1,19 @@
 import { Box } from "@mui/material";
 import React from "react";
+import { BrowserRouter } from "react-router-dom";
 //import './App.css';
 import { Navbar } from "./components/Navbar";
-import { Page } from "./components/Page";
+import { AppRouter } from "./routes/AppRouter";
 
 const App: React.FC = () => {
   return (
     <>
-      <Navbar />
-      <Box paddingTop='80px'>
-        <Page title={'Categorias'}>
-          Conteudo
-        </Page>
-      </Box>
+      <BrowserRouter>
+        <Navbar />
+        <Box paddingTop='80px'>
+          <AppRouter />
+        </Box>
+      </BrowserRouter>
     </>
   );
 }

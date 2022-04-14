@@ -1,8 +1,23 @@
 import { IconButton, Menu as MuiMenu, MenuItem } from "@mui/material";
 import * as React from "react";
 import MenuIcon from "@mui/icons-material/Menu";
+import { Link } from 'react-router-dom';
 
 export const Menu = () => {
+  const listRoutes = [ 
+    {
+      name: 'Dashboard',
+      path: ''
+    },
+    {
+      name: 'Categorias',
+      path: 'categories'
+    },
+    {
+      name: 'Produtos',
+      path: 'products'
+    },
+  ]
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
 
@@ -27,8 +42,22 @@ export const Menu = () => {
         anchorEl={anchorEl}
         onClose={handleClose}
       >
-        <MenuItem onClick={handleClose}>Categorias</MenuItem>
-        <MenuItem onClick={handleClose}>Produtos</MenuItem>
+        {
+          listRoutes.map(
+            (routeName, key) => {
+              return (
+                <MenuItem 
+                  key={key}
+                  component={Link}
+                  to={routeName.path}
+                  onClick={handleClose}
+                >
+                  { routeName.name }
+                </MenuItem>
+              )
+            }
+          )
+        }
       </MuiMenu>
     </>
   );
