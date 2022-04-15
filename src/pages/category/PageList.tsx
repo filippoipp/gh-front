@@ -1,19 +1,22 @@
 import { Box, Fab } from "@mui/material";
 import * as React from "react";
-import { Link } from "react-router-dom";
 import { Page } from "../../components/Page";
 import AddIcon from '@mui/icons-material/Add';
 import Table from "./Table";
+import Modal from "./Modal";
+import { useState } from "react";
 
 const CategoryList = () => {
+  const [open, setOpen] = useState(false);
+  const handleOpen = () => setOpen(true);
+
   return (
     <Page title="Listagem categorias">
       <Box dir='rtl'>
           <Fab
             title="Adicionar categoria"
             size="small"
-            component={Link}
-            to="/categories/create"
+            onClick={handleOpen}
           >
             <AddIcon />
           </Fab>
@@ -21,6 +24,7 @@ const CategoryList = () => {
       <Box>
         <Table/>
       </Box>
+      <Modal open={open} setOpen/>
     </Page>
   );
 };

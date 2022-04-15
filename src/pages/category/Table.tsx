@@ -11,11 +11,11 @@ import {
   Paper,
 } from "@mui/material";
 import { styled } from "@mui/material/styles";
-import { httpRequests } from "../../util/http";
 import { useState, useEffect } from "react";
 
 import format from 'date-fns/format'
 import parseISO from 'date-fns/parseISO'
+import categoryHttp from "../../util/http/category-http";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -47,10 +47,9 @@ const Table = () => {
   const [data, setData] = useState([]);
 
   useEffect(() => {
-    httpRequests.get('/private/v1/category').then(
-      response => setData(response.data)
-    );
+    categoryHttp.list().then(({data}) => setData(data))
   }, [])
+
   return (
     <TableContainer component={Paper}>
       <MuiTable sx={{ minWidth: 700 }} aria-label="customized table">
@@ -58,7 +57,7 @@ const Table = () => {
           <TableRow>
             <StyledTableCell>ID</StyledTableCell>
             <StyledTableCell>Nome</StyledTableCell>
-            <StyledTableCell>Data de criação</StyledTableCell>
+            <StyledTableCell>Criado em</StyledTableCell>
             <StyledTableCell align="right">Ações</StyledTableCell>
           </TableRow>
         </TableHead>

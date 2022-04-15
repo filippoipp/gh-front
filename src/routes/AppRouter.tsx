@@ -10,7 +10,6 @@ export const AppRouter: React.FC = (props: Props) => {
     <Routes>
       <Route path="/" element={<Dashboard />} />
       <Route path="/categories" element={<CategoryList />} />
-      <Route path="/categories/create" element={<CategoryList />} />
       <Route path="/products" element={<ProductList />} />
     </Routes>
   );
