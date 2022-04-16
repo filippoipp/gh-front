@@ -9,6 +9,7 @@ import {
   tableCellClasses,
   TableCell,
   Paper,
+  Tooltip
 } from "@mui/material";
 import { styled } from "@mui/material/styles";
 
@@ -99,12 +100,15 @@ const Table = (props: TableProps) => {
                 <Link
                   to={`/products/edit/${row.id}`}
                 >
-                  <EditIcon
-                    style={{ color: 'fbc004'}}
-                  />
+                  <Tooltip title="Editar">
+                    <EditIcon
+                      style={{ color: 'fbc004'}}
+                    />
+                  </Tooltip>
                 </Link>
-
-                <DeleteIcon onClick={() => deleteRegister(row.id)} style={{ color: 'red', cursor: 'pointer' }}/>
+                <Tooltip title="Excluir">
+                  <DeleteIcon onClick={() => deleteRegister(row.id)} style={{ color: 'red', cursor: 'pointer' }}/>
+                </Tooltip>
               </StyledTableCell>
             </StyledTableRow>
           ))}

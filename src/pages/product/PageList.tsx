@@ -8,10 +8,13 @@ import Table from "./Table";
 import Modal from "./Modal";
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
+import ModalExport from "./ModalExport";
 
 const CategoryList = () => {
   const [open, setOpen] = useState(false);
+  const [openExport, setOpenExport] = useState(false);
   const handleOpen = () => setOpen(true);
+  const handleOpenExport = () => setOpenExport(true);
 
   const { id } = useParams();
 
@@ -45,7 +48,7 @@ const CategoryList = () => {
             variant='outlined'
             size='large'
             style={{backgroundColor: '#e41134', color: '#fbc004', marginRight: '5px'}}
-            onClick={handleOpen}
+            onClick={handleOpenExport}
           >
             Exportar <FileDownloadIcon />
           </Button>
@@ -54,6 +57,7 @@ const CategoryList = () => {
         <Table/>
       </Box>
       <Modal open={open} setOpen={setOpen}/>
+      <ModalExport openExport={openExport} setOpenExport={setOpenExport} ></ModalExport>
     </Page>
   );
 };

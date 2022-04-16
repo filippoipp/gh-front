@@ -1,4 +1,4 @@
-import { Box, TextField, Button, Select, MenuItem, InputLabel, FormControl } from "@mui/material";
+import { Box, TextField, Button, MenuItem, FormControl } from "@mui/material";
 import * as React from "react";
 import { useForm } from "react-hook-form";
 import categoryHttp from "../../util/http/category-http";
@@ -33,6 +33,7 @@ const Form = (props: FormProps) => {
   }, [])
 
   function onSubmit(formData: any) {
+    formData = {...formData, price: formData.price.replace(/\D/g, "")}
     const http = !id
       ? productHttp.create(formData)
       : productHttp.update(id, formData)
@@ -56,35 +57,40 @@ const Form = (props: FormProps) => {
       {errors.name && errors.name.type === 'required' && (
         <p style={{color: 'red'}}>{errors.name.message}</p>) 
       }
-      <CurrencyFormat
-        {...register('price', { required: 'Campo obrigatório' }) }
-        customInput={TextField}
-        thousandSeparator='.'
-        decimalSeparator=','
-        prefix="R$"
-        fullWidth
-        margin='normal'
-        name="price"
-        label="Preço"
-        variant="outlined"
-        decimalScale={2}
-        InputLabelProps={{ shrink: true }}
-      />
+      <FormControl fullWidth margin='normal' {...register('price', { required: 'Campo obrigatório' }) }>
+        <CurrencyFormat
+          customInput={TextField}
+          thousandSeparator='.'
+          decimalSeparator=','
+          prefix="R$"
+          fullWidth
+          margin='normal'
+          name="price"
+          label="Preço"
+          variant="outlined"
+          decimalScale={2}
+          InputLabelProps={{ shrink: true }}
+        />
+      </FormControl>
       {errors.price && errors.price.type === 'required' && (
         <p style={{color: 'red'}}>{errors.price.message}</p>) 
       }
-      <FormControl fullWidth margin='normal'>
-        <InputLabel id="demo-simple-select-label">Categoria</InputLabel>
-        <Select
-          name="category"
-          labelId="demo-simple-select-label"
-          id="demo-simple-select"
-        >
-          {categories.map((category: Category) => (
-            <MenuItem value={category.id}>{category.name}</MenuItem>
-          ))}
-        </Select>
-      </FormControl>
+      <TextField
+        {...register('categoryId', { required: 'Campo obrigatório' }) }
+        select
+        name="categoryId"
+        label='Categoria'
+        fullWidth
+        margin='normal'
+        InputLabelProps={{ shrink: true }}
+      >
+        {categories.map((category: Category) => (
+          <MenuItem key={category.id} value={category.id}>{category.name}</MenuItem>
+        ))}
+      </TextField>
+      {errors.categoryId && errors.categoryId.type === 'required' && (
+        <p style={{color: 'red'}}>{errors.categoryId.message}</p>) 
+      }
       <Box dir="rtl">
         <Button
           variant='outlined'
