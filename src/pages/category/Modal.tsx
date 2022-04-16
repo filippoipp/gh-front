@@ -1,6 +1,7 @@
 import * as React from "react";
-import { Modal as MuiModal, Box, Fade, Backdrop } from '@mui/material';
+import { Modal as MuiModal, Box, Fade, Backdrop, Typography } from '@mui/material';
 import Form from './Form';
+import { useParams } from "react-router-dom";
 
 type ModalProps = {
   open: boolean;
@@ -20,7 +21,8 @@ const style = {
 };
 
 const Modal = (props: ModalProps) => {
-  const handleClose = () => props.setOpen(false);
+  const handleClose = () => props.setOpen(false)
+  const { id } = useParams();
 
   return (
     <MuiModal
@@ -36,7 +38,10 @@ const Modal = (props: ModalProps) => {
     >
       <Fade in={props.open}>
         <Box sx={style}>
-          <Form />
+          <Typography id="modal-modal-title" variant="h6" component="h2">
+            {!id ? 'Criar Categoria' : 'Editar categoria'}
+          </Typography>
+          <Form setOpen={props.setOpen}/>
         </Box>
       </Fade>
     </MuiModal>

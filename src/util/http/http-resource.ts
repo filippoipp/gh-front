@@ -5,6 +5,10 @@ export default class HttpResource {
     
     }
 
+    get(id: string) {
+        return this.http.get(`${this.resource}/${id}`)
+    }
+
     list() {
         return this.http.get(this.resource);
     }

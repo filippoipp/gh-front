@@ -1,5 +1,5 @@
 import * as React from "react";
-
+import { Link } from 'react-router-dom';
 import {
   TableContainer,
   Table as MuiTable,
@@ -11,6 +11,10 @@ import {
   Paper,
 } from "@mui/material";
 import { styled } from "@mui/material/styles";
+
+import EditIcon from '@mui/icons-material/Edit';
+import DeleteIcon from '@mui/icons-material/Delete';
+
 import { useState, useEffect } from "react";
 
 import format from 'date-fns/format'
@@ -43,12 +47,19 @@ interface Category {
   createdAt: Date;
 }
 
-const Table = () => {
+interface TableProps {
+}
+
+const Table = (props: TableProps) => {
   const [data, setData] = useState([]);
 
   useEffect(() => {
     categoryHttp.list().then(({data}) => setData(data))
   }, [])
+
+  function deleteRegister(id: string) {
+    categoryHttp.delete(id).then((response) => console.log(response))
+  }
 
   return (
     <TableContainer component={Paper}>
@@ -71,7 +82,17 @@ const Table = () => {
               <StyledTableCell>
                 <span>{format(parseISO(String(row.createdAt)), 'dd/MM/yyyy')}</span>
               </StyledTableCell>
-              <StyledTableCell align="right"></StyledTableCell>
+              <StyledTableCell align="right">
+                <Link
+                  to={`/categories/edit/${row.id}`}
+                >
+                  <EditIcon
+                    style={{ color: 'fbc004'}}
+                  />
+                </Link>
+
+                <DeleteIcon onClick={() => deleteRegister(row.id)} style={{ color: 'red', cursor: 'pointer' }}/>
+              </StyledTableCell>
             </StyledTableRow>
           ))}
         </TableBody>
