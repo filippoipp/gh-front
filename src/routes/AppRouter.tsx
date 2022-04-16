@@ -2,7 +2,7 @@ import * as React from "react";
 import { Routes, Route } from "react-router-dom";
 import CategoryList from "../pages/category/PageList";
 import Dashboard from "../pages/Dashboard";
-import ProductList from "../pages/product/List";
+import ProductList from "../pages/product/PageList";
 
 type Props = {};
 export const AppRouter: React.FC = (props: Props) => {
@@ -12,6 +12,7 @@ export const AppRouter: React.FC = (props: Props) => {
       <Route path="/categories" element={<CategoryList />} />
       <Route path="/categories/edit/:id" element={<CategoryList />} />
       <Route path="/products" element={<ProductList />} />
+      <Route path="/products/edit/:id" element={<ProductList />} />
     </Routes>
   );
 };

@@ -21,7 +21,7 @@ const CategoryList = () => {
   }, [id])
 
   return (
-    <Page title="Listagem de categorias">
+    <Page title="Listagem de produtos">
       <Box dir='rtl' style={{marginBottom: '10px'}}>
           <Button
             variant='outlined'

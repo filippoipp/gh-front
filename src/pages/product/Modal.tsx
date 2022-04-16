@@ -22,7 +22,7 @@ const style = {
 
 const Modal = (props: ModalProps) => {
   const history = useNavigate();
-  const handleClose = () => { props.setOpen(false); history('/categories') }
+  const handleClose = () => { props.setOpen(false); history('/products') }
   const { id } = useParams();
 
   return (
@@ -40,7 +40,7 @@ const Modal = (props: ModalProps) => {
       <Fade in={props.open}>
         <Box sx={style}>
           <Typography id="modal-modal-title" variant="h6" component="h2">
-            {!id ? 'Criar categoria' : 'Editar categoria'}
+            {!id ? 'Criar produto' : 'Editar produto'}
           </Typography>
           <Form setOpen={props.setOpen}/>
         </Box>

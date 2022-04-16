@@ -19,7 +19,7 @@ import { useState, useEffect } from "react";
 
 import format from 'date-fns/format'
 import parseISO from 'date-fns/parseISO'
-import categoryHttp from "../../util/http/category-http";
+import productHttp from "../../util/http/product-http";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -41,10 +41,17 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
   },
 }));
 
-interface Category {
+interface Product {
   id: string;
   name: string;
+  price: number;
+  categoryId: string;
   createdAt: Date;
+  category: {
+    id: string;
+    name: string;
+    createdAt: Date;
+  }
 }
 
 interface TableProps {
@@ -55,11 +62,11 @@ const Table = (props: TableProps) => {
   const [refreshKey, setRefreshKey] = useState(0);
 
   useEffect(() => {
-    categoryHttp.list().then(({data}) => setData(data))
+    productHttp.list().then(({data}) => setData(data))
   }, [refreshKey])
 
   function deleteRegister(id: string) {
-    categoryHttp.delete(id).then((response) => console.log(response))
+    productHttp.delete(id).then((response) => console.log(response))
     setRefreshKey(oldKey => oldKey +1)
   }
 
@@ -70,23 +77,27 @@ const Table = (props: TableProps) => {
           <TableRow>
             <StyledTableCell>ID</StyledTableCell>
             <StyledTableCell>Nome</StyledTableCell>
+            <StyledTableCell>Preço</StyledTableCell>
+            <StyledTableCell>Categoria</StyledTableCell>
             <StyledTableCell>Criado em</StyledTableCell>
             <StyledTableCell align="right">Ações</StyledTableCell>
           </TableRow>
         </TableHead>
         <TableBody>
-          {data.map((row: Category) => (
+          {data.map((row: Product) => (
             <StyledTableRow key={row.id}>
               <StyledTableCell component="th" scope="row">
                 {row.id}
               </StyledTableCell>
               <StyledTableCell>{row.name}</StyledTableCell>
+              <StyledTableCell>{row.price}</StyledTableCell>
+              <StyledTableCell>{row.category.name}</StyledTableCell>
               <StyledTableCell>
                 <span>{format(parseISO(String(row.createdAt)), 'dd/MM/yyyy')}</span>
               </StyledTableCell>
               <StyledTableCell align="right">
                 <Link
-                  to={`/categories/edit/${row.id}`}
+                  to={`/products/edit/${row.id}`}
                 >
                   <EditIcon
                     style={{ color: 'fbc004'}}
