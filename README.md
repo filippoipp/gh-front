@@ -5,4 +5,4 @@
 copiar o conteúdo do arquivo .env.example para o .en que foi criado
 
 # Executar a aplicação
-npm start
+`npm start`
