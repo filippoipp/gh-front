@@ -62,7 +62,7 @@ const CategoryList = () => {
       </Box>
       <Modal open={open} setOpen={setOpen} refreshKey={refreshKey} setRefreshKey={setRefreshKey}/>
       <ModalExport openExport={openExport} setOpenExport={setOpenExport} ></ModalExport>
-      <ModalImport openImport={openImport} setOpenImport={setOpenImport} ></ModalImport>
+      <ModalImport openImport={openImport} setOpenImport={setOpenImport} refreshKey={refreshKey} setRefreshKey={setRefreshKey}></ModalImport>
     </Page>
   );
 };

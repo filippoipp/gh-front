@@ -9,9 +9,11 @@ import {
   tableCellClasses,
   TableCell,
   Paper,
-  Tooltip
+  Tooltip,
+  Snackbar
 } from "@mui/material";
 import { styled } from "@mui/material/styles";
+import MuiAlert, { AlertProps } from '@mui/material/Alert';
 
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
@@ -42,6 +44,13 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
   },
 }));
 
+const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
+  props,
+  ref,
+) {
+  return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+});
+
 interface Product {
   id: string;
   name: string;
@@ -62,15 +71,24 @@ interface TableProps {
 
 const Table = (props: TableProps) => {
   const [data, setData] = useState([]);
+  const [open, setOpen] = useState(false);
 
   useEffect(() => {
     productHttp.list().then(({data}) => setData(data))
   }, [props.refreshKey])
 
   function deleteRegister(id: string) {
-    productHttp.delete(id).then((response) => console.log(response))
+    productHttp.delete(id).then((response) => console.log(response)).catch(error => setOpen(true))
     props.setRefreshKey((oldKey: any) => oldKey +1)
   }
+
+  const handleClose = (event?: React.SyntheticEvent | Event, reason?: string) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+
+    setOpen(false);
+  };
 
   return (
     <TableContainer component={Paper}>
@@ -115,6 +133,11 @@ const Table = (props: TableProps) => {
           ))}
         </TableBody>
       </MuiTable>
+      <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
+        <Alert onClose={handleClose} severity="error" sx={{ width: '100%' }}>
+          Ocorreu um problema ao excluir o produto.
+        </Alert>
+      </Snackbar>
     </TableContainer>
   );
 };

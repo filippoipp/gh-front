@@ -6,6 +6,8 @@ import { useNavigate } from "react-router-dom";
 type ModalProps = {
   openImport: boolean;
   setOpenImport: any;
+  refreshKey: number;
+  setRefreshKey: any;
 };
 
 const style = {
@@ -41,7 +43,7 @@ const ModalImport = (props: ModalProps) => {
           <Typography id="modal-modal-title" variant="h6" component="h2">
             Importar produtos para uma categoria
           </Typography>
-          <ImportForm setOpenImport={props.setOpenImport}/>
+          <ImportForm setOpenImport={props.setOpenImport} refreshKey={props.refreshKey} setRefreshKey={props.setRefreshKey}/>
         </Box>
       </Fade>
     </MuiModal>

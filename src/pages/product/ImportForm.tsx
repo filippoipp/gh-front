@@ -8,6 +8,8 @@ import productHttp from "../../util/http/product-http";
 
 interface FormProps {
   setOpenImport: any;
+  refreshKey: number;
+  setRefreshKey: any;
 }
 
 interface Category {
@@ -33,6 +35,7 @@ const ImportForm = (props: FormProps) => {
     productHttp.import(formData).then((response) => console.log(response))
     history('/products');
     props.setOpenImport(false)
+    props.setRefreshKey((oldKey: any) => oldKey +1)
   }
 
   return (
