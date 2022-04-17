@@ -24,4 +24,11 @@ export default class HttpResource {
     delete(id: string) {
         return this.http.delete(`${this.resource}/${id}`)
     }
+
+    import(data: any) {
+        return this.http.post(`${this.resource}/import`, data, {
+            headers: {
+              "Content-Type": "multipart/form-data",
+            },})
+    }
 }

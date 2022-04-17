@@ -10,6 +10,7 @@ import { useParams } from "react-router-dom";
 const CategoryList = () => {
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
+  const [refreshKey, setRefreshKey] = useState(0);
 
   const { id } = useParams();
 
@@ -33,9 +34,9 @@ const CategoryList = () => {
           </Button>
       </Box>
       <Box>
-        <Table/>
+        <Table refreshKey={refreshKey} setRefreshKey={setRefreshKey}/>
       </Box>
-      <Modal open={open} setOpen={setOpen}/>
+      <Modal open={open} setOpen={setOpen} refreshKey={refreshKey} setRefreshKey={setRefreshKey}/>
     </Page>
   );
 };

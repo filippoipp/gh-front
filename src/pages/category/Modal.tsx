@@ -6,6 +6,8 @@ import { useParams, useNavigate } from "react-router-dom";
 type ModalProps = {
   open: boolean;
   setOpen: any;
+  refreshKey: number;
+  setRefreshKey: any;
 };
 
 const style = {
@@ -42,7 +44,7 @@ const Modal = (props: ModalProps) => {
           <Typography id="modal-modal-title" variant="h6" component="h2">
             {!id ? 'Criar categoria' : 'Editar categoria'}
           </Typography>
-          <Form setOpen={props.setOpen}/>
+          <Form setOpen={props.setOpen} refreshKey={props.refreshKey} setRefreshKey={props.setRefreshKey}/>
         </Box>
       </Fade>
     </MuiModal>

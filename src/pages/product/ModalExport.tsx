@@ -1,7 +1,7 @@
 import * as React from "react";
 import { Modal as MuiModal, Box, Fade, Backdrop, Typography } from '@mui/material';
 import ExportForm from './ExportForm';
-import { useParams, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 type ModalProps = {
   openExport: boolean;
@@ -23,7 +23,6 @@ const style = {
 const ModalExport = (props: ModalProps) => {
   const history = useNavigate();
   const handleClose = () => { props.setOpenExport(false); history('/products') }
-  const { id } = useParams();
 
   return (
     <MuiModal

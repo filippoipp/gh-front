@@ -56,19 +56,20 @@ interface Product {
 }
 
 interface TableProps {
+  refreshKey: number;
+  setRefreshKey: any;
 }
 
 const Table = (props: TableProps) => {
   const [data, setData] = useState([]);
-  const [refreshKey, setRefreshKey] = useState(0);
 
   useEffect(() => {
     productHttp.list().then(({data}) => setData(data))
-  }, [refreshKey])
+  }, [props.refreshKey])
 
   function deleteRegister(id: string) {
     productHttp.delete(id).then((response) => console.log(response))
-    setRefreshKey(oldKey => oldKey +1)
+    props.setRefreshKey((oldKey: any) => oldKey +1)
   }
 
   return (

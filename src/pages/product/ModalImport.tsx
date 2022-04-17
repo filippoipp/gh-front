@@ -1,13 +1,11 @@
 import * as React from "react";
 import { Modal as MuiModal, Box, Fade, Backdrop, Typography } from '@mui/material';
-import Form from './Form';
-import { useParams, useNavigate } from "react-router-dom";
+import ImportForm from './ImportForm';
+import { useNavigate } from "react-router-dom";
 
 type ModalProps = {
-  open: boolean;
-  setOpen: any;
-  refreshKey: number;
-  setRefreshKey: any;
+  openImport: boolean;
+  setOpenImport: any;
 };
 
 const style = {
@@ -22,16 +20,15 @@ const style = {
   p: 4,
 };
 
-const Modal = (props: ModalProps) => {
+const ModalImport = (props: ModalProps) => {
   const history = useNavigate();
-  const handleClose = () => { props.setOpen(false); history('/products') }
-  const { id } = useParams();
+  const handleClose = () => { props.setOpenImport(false); history('/products') }
 
   return (
     <MuiModal
       aria-labelledby="transition-modal-title"
       aria-describedby="transition-modal-description"
-      open={props.open}
+      open={props.openImport}
       onClose={handleClose}
       closeAfterTransition
       BackdropComponent={Backdrop}
@@ -39,16 +36,16 @@ const Modal = (props: ModalProps) => {
         timeout: 500,
       }}
     >
-      <Fade in={props.open}>
+      <Fade in={props.openImport}>
         <Box sx={style}>
           <Typography id="modal-modal-title" variant="h6" component="h2">
-            {!id ? 'Criar produto' : 'Editar produto'}
+            Importar produtos para uma categoria
           </Typography>
-          <Form setOpen={props.setOpen} refreshKey={props.refreshKey} setRefreshKey={props.setRefreshKey}/>
+          <ImportForm setOpenImport={props.setOpenImport}/>
         </Box>
       </Fade>
     </MuiModal>
   );
 };
 
-export default Modal;
+export default ModalImport;

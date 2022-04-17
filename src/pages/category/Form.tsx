@@ -7,6 +7,8 @@ import { useParams, useNavigate } from "react-router-dom";
 
 interface FormProps {
   setOpen: any;
+  refreshKey: number;
+  setRefreshKey: any;
 }
 
 
@@ -31,6 +33,7 @@ const Form = (props: FormProps) => {
 
     history('/categories');
     props.setOpen(false)
+    props.setRefreshKey((oldKey: any) => oldKey +1)
   }
 
   return (

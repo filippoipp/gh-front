@@ -9,12 +9,16 @@ import Modal from "./Modal";
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import ModalExport from "./ModalExport";
+import ModalImport from "./ModalImport";
 
 const CategoryList = () => {
   const [open, setOpen] = useState(false);
   const [openExport, setOpenExport] = useState(false);
+  const [openImport, setOpenImport] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleOpenExport = () => setOpenExport(true);
+  const handleOpenImport = () => setOpenImport(true);
+  const [refreshKey, setRefreshKey] = useState(0);
 
   const { id } = useParams();
 
@@ -40,7 +44,7 @@ const CategoryList = () => {
             variant='outlined'
             size='large'
             style={{backgroundColor: '#e41134', color: '#fbc004', marginRight: '5px'}}
-            onClick={handleOpen}
+            onClick={handleOpenImport}
           >
             Importar <FileUploadIcon />
           </Button>
@@ -54,10 +58,11 @@ const CategoryList = () => {
           </Button>
       </Box>
       <Box>
-        <Table/>
+        <Table refreshKey={refreshKey} setRefreshKey={setRefreshKey}/>
       </Box>
-      <Modal open={open} setOpen={setOpen}/>
+      <Modal open={open} setOpen={setOpen} refreshKey={refreshKey} setRefreshKey={setRefreshKey}/>
       <ModalExport openExport={openExport} setOpenExport={setOpenExport} ></ModalExport>
+      <ModalImport openImport={openImport} setOpenImport={setOpenImport} ></ModalImport>
     </Page>
   );
 };

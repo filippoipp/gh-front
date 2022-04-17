@@ -7,7 +7,7 @@ import { useNavigate } from "react-router-dom";
 import productHttp from "../../util/http/product-http";
 
 interface FormProps {
-  setOpenExport: any;
+  setOpenImport: any;
 }
 
 interface Category {
@@ -16,49 +16,23 @@ interface Category {
   createdAt: Date;
 }
 
-interface Product {
-  id: string;
-  name: string;
-  price: number;
-  categoryId: string;
-  createdAt: Date;
-  category: {
-    id: string;
-    name: string;
-    createdAt: Date;
-  }
-}
-
-const ExportForm = (props: FormProps) => {
+const ImportForm = (props: FormProps) => {
   const { register, handleSubmit, formState: { errors } } = useForm();
   const [categories, setCategories] = useState([])
-  const [products, setProducts] = useState([])
-  const [filteredProducts, setFilteredProducts] = useState([])
 
   const history = useNavigate();
 
   useEffect(() => {
     categoryHttp.list().then(({data}) => setCategories(data))
-    productHttp.list().then(({data}) => setProducts(data))
   }, [])
 
-  function handleFilterdProducts(event: any) {
-    const filtered = products.filter((product: Product) => product.categoryId === event.target.value)
-    setFilteredProducts(filtered);
-    console.log(filtered)
-  }
-
-  function onSubmit() {
-    const jsonString = `data:text/json;chatset=utf-8,${encodeURIComponent(
-      JSON.stringify(filteredProducts)
-    )}`;
-    const link = document.createElement("a");
-    link.href = jsonString;
-    link.download = "products.json";
-    link.click();
-
+  function onSubmit(data: any) {
+    const formData = new FormData();
+    formData.append('file', data.file[0])
+    formData.append('categoryId', data.categoryId)
+    productHttp.import(formData).then((response) => console.log(response))
     history('/products');
-    props.setOpenExport(false)
+    props.setOpenImport(false)
   }
 
   return (
@@ -71,7 +45,6 @@ const ExportForm = (props: FormProps) => {
         fullWidth
         margin='normal'
         InputLabelProps={{ shrink: true }}
-        onChange={handleFilterdProducts}
       >
         {categories.map((category: Category) => (
           <MenuItem key={category.id} value={category.id}>{category.name}</MenuItem>
@@ -80,6 +53,19 @@ const ExportForm = (props: FormProps) => {
       {errors.categoryId && errors.categoryId.type === 'required' && (
         <p style={{color: 'red'}}>{errors.categoryId.message}</p>) 
       }
+      <TextField
+        {...register('file', { required: 'Campo obrigatório' }) }
+        type='file'
+        name="file"
+        label='Arquivo'
+        fullWidth
+        margin='normal'
+        InputLabelProps={{ shrink: true }}
+      >
+      </TextField>
+      {errors.file && errors.file.type === 'required' && (
+        <p style={{color: 'red'}}>{errors.file.message}</p>) 
+      }
       <Box dir="rtl">
         <Button
           variant='outlined'
@@ -87,11 +73,11 @@ const ExportForm = (props: FormProps) => {
           style={{backgroundColor: '#e41134', color: '#fbc004'}}
           type='submit'
         >
-          Exportar
+          Importar
         </Button>
       </Box>
     </form>
   );
 };
 
-export default ExportForm;
+export default ImportForm;

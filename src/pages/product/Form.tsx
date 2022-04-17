@@ -9,6 +9,8 @@ import CurrencyFormat from 'react-currency-format';
 
 interface FormProps {
   setOpen: any;
+  refreshKey: number;
+  setRefreshKey: any;
 }
 
 interface Category {
@@ -41,6 +43,7 @@ const Form = (props: FormProps) => {
 
     history('/products');
     props.setOpen(false)
+    props.setRefreshKey((oldKey: any) => oldKey +1)
   }
 
   return (
